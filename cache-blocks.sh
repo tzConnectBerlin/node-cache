@@ -16,7 +16,7 @@ if [ -z $TOP ]; then
 fi
 echo $TOP
 
-while true; do
+while [ "$TOP" != "0" ]; do
     CURRENT=$TOP
     TOP=$(($TOP-1))
     if [ -f $TOP.json ]; then
@@ -26,9 +26,6 @@ while true; do
     echo "Caching level $CURRENT"
     wget -q $NODE/chains/main/blocks/$CURRENT -O $TMPFILE
     mv $TMPFILE $CURRENT.json
-    if [ "$TOP" -le "10" ]; then
-	break
-    fi
 done
        
     
