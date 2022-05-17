@@ -18,15 +18,15 @@ echo $TOP
 
 while true; do
     CURRENT=$TOP
-    TOP=$((TOP-1))
+    TOP=$(($TOP-1))
     if [ -f $TOP.json ]; then
 	echo "$TOP was done"
-       continue
+	continue
     fi;
     echo "Caching level $CURRENT"
     wget -q $NODE/chains/main/blocks/$CURRENT -O $TMPFILE
     mv $TMPFILE $CURRENT.json
-    if [ $TOP == 0 ]; then
+    if [ "$TOP" -le "10" ]; then
 	break
     fi
 done
