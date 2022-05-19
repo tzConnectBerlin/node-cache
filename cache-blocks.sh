@@ -25,7 +25,11 @@ while [ "$TOP" != "0" ]; do
     fi;
     echo "Caching level $CURRENT"
     wget -q $NODE/chains/main/blocks/$CURRENT -O $TMPFILE
-    mv $TMPFILE $CURRENT.json
+    if jq -e . >/dev/null 2>&1 < $TMPFILE; then
+	mv $TMPFILE $CURRENT.json
+    else
+	echo "Error getting valid JSON for level $CURRENT"
+    fi
 done
        
     
